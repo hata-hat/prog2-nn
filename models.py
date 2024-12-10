@@ -19,11 +19,9 @@ class MyModel(nn.Module):
         logits = self.network(x)
         return logits
 
-
 def test_accuracy(model, dataloader):
     #全てのミニバッチに対して推論をして、正解率を計算する
     n_corrects = 0  #正解した個数をカウント
-
     model.eval()
     for image_batch, label_batch in dataloader:
         #モデルに入れて結果を出す
@@ -37,7 +35,6 @@ def test_accuracy(model, dataloader):
     accuracy = n_corrects / len(dataloader.dataset)
     return accuracy
     
-
 def train(model, dataloader, loss_fn, optimizer):
     """1 epoch の学習を行う"""
     model.train()
@@ -56,7 +53,6 @@ def train(model, dataloader, loss_fn, optimizer):
     #最後のバッチのロス
     return loss.item()
 
-
 def test(model, dataloader, loss_fn):
     loss_total = 0.0
 
@@ -68,6 +64,5 @@ def test(model, dataloader, loss_fn):
         #損失(誤差)の計算
         loss = loss_fn(logits_batch, label_batch)
         loss_total += loss.item()
-
 
     return loss_total/len(dataloader)

@@ -1,11 +1,8 @@
 import time
-
 import matplotlib.pyplot as plt
-
 import torch
 from torchvision import datasets
 import torchvision.transforms.v2 as transforms
-
 import models
 
 #データセットの前処理を定義
@@ -48,22 +45,17 @@ dataloader_test = torch.utils.data.DataLoader(
 
 #モデルのインスタンスを作成
 model = models.MyModel()
-
 #精度を計算
 acc_test = models.test_accuracy(model, dataloader_test)
 print(f'test accuracy: {acc_test*100:.2f}%')
 
 acc_train = models.test_accuracy(model, dataloader_train)
 print(f'train accuracy: {acc_train*100:.2f}%')
-
-
 #損失関数(誤差関数、ロス関数)の選択
 loss_fn = torch.nn.CrossEntropyLoss()
-
 #最適化の方法の選択
 learning_rate = 0.003
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
-
 #学習
 #models.train(model, dataloader_train, loss_fn, optimizer)
 #精度の再計算

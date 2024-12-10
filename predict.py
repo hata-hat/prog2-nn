@@ -1,16 +1,11 @@
 import matplotlib.pyplot as plt
-
 import torch
 from torchvision import datasets
 import torchvision.transforms.v2 as transforms
-
 import models
 
 model = models.MyModel()
 print(model)
-
-
-
 
 ds_train = datasets.FashionMNIST(
     root='data',
@@ -25,18 +20,15 @@ ds_train = datasets.FashionMNIST(
 image, target = ds_train[0]
 #(1,H,W)から(1,1,H,W)に次元を上げる
 image = image.unsqueeze(dim=0)
-
 #モデルに入力画像を入れて結果を出す
 model.eval()
 with torch.no_grad():
     logits = model(image)
 
 print(logits)
-
 #ロジットをグラフにする
 plt.bar(range(len(logits[0])),logits[0])
 plt.show()
-
 #クラス確率をグラフにする
 probs = logits.softmax(dim=1)
 plt.bar(range(len(probs[0])),probs[0])
@@ -52,5 +44,4 @@ plt.bar(range(len(probs[0])),probs[0])
 plt.title(f'predicted class: {probs[0].argmax()}')
 plt.ylim(0, 1)
 plt.show()
-
 # ctrl + / で複数行をコメントアウト
