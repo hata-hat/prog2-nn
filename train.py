@@ -69,11 +69,11 @@ loss_train_history = []
 loss_test_history = []
 acc_train_history = []
 acc_test_history = []
-a = time.time()
+
 #学習
 for k in range(n_epochs):
     print(f'epach {k+1}/{n_epochs}', end=': ', flush=True)
-    
+    time_start = time.time()    
     loss_train = models.train(model, dataloader_train, loss_fn, optimizer)
     print(f'train loss: {loss_train:.3f}', end=', ', flush=True)
     loss_train_history.append(loss_train)
@@ -89,9 +89,9 @@ for k in range(n_epochs):
     acc_test = models.test_accuracy(model, dataloader_test)
     print(f'train accuracy: {acc_test*100:.2f}%', end=', ', flush=True)
     acc_test_history.append(acc_test)
-    b = time.time()
-    print(f'実行時間: {b-a:.2f}秒')
-    a = b
+    time_end = time.time()
+    print(f'実行時間: {time_end-time_start:.2f}秒')
+
 
 plt.plot(acc_train_history, label='train')
 plt.plot(acc_test_history, label='test')
