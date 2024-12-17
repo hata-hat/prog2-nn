@@ -22,11 +22,11 @@ class MyModel(nn.Module):
 def test_accuracy(model, dataloader, device='cpu'):
     #全てのミニバッチに対して推論をして、正解率を計算する
     n_corrects = 0  #正解した個数をカウント
-    model.to(device)
+    model = model.to(device)
     model.eval()
     for image_batch, label_batch in dataloader:
-        image_batch.to(device)
-        label_batch.to(device)
+        image_batch = image_batch.to(device)
+        label_batch = label_batch.to(device)
         #モデルに入れて結果を出す
         with torch.no_grad():
             logits_batch = model(image_batch)
@@ -40,11 +40,11 @@ def test_accuracy(model, dataloader, device='cpu'):
     
 def train(model, dataloader, loss_fn, optimizer, device='cpu'):
     """1 epoch の学習を行う"""
-    model.to(device)
+    model = model.to(device)
     model.train()
     for image_batch, label_batch in dataloader:
-        image_batch.to(device)
-        label_batch.to(device)
+        image_batch = image_batch.to(device)
+        label_batch = label_batch.to(device)
         #モデルにバッチを入れて計算
         logits_batch = model(image_batch)
 
@@ -61,11 +61,11 @@ def train(model, dataloader, loss_fn, optimizer, device='cpu'):
 
 def test(model, dataloader, loss_fn, device='cpu'):
     loss_total = 0.0
-    model.to(device)
+    model = model.to(device)
     model.eval()
     for image_batch, label_batch in dataloader:
-        image_batch.to(device)
-        label_batch.to(device)
+        image_batch = image_batch.to(device)
+        label_batch = label_batch.to(device)
         with torch.no_grad():
             logits_batch = model(image_batch)
 
