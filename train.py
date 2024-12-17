@@ -93,7 +93,7 @@ for k in range(n_epochs):
     print(f'実行時間: {time_end-time_start:.2f}秒', end=', ', flush=True)
     time_start = time.time()
     acc_test = models.test_accuracy(model, dataloader_test)
-    print(f'train accuracy: {acc_test*100:.2f}%', end=', ', flush=True)
+    print(f'test accuracy: {acc_test*100:.2f}%', end=', ', flush=True)
     acc_test_history.append(acc_test)
     time_end = time.time()
     print(f'実行時間: {time_end-time_start:.2f}秒')
