@@ -5,6 +5,9 @@ from torchvision import datasets
 import torchvision.transforms.v2 as transforms
 import models
 
+#GPUがあれば'cuda'無ければ'cpu'をデバイス名に設定
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
 #データセットの前処理を定義
 ds_transform = transforms.Compose([
     transforms.ToImage(),
@@ -46,10 +49,10 @@ dataloader_test = torch.utils.data.DataLoader(
 #モデルのインスタンスを作成
 model = models.MyModel()
 #精度を計算
-acc_test = models.test_accuracy(model, dataloader_test)
+acc_test = models.test_accuracy(model, dataloader_test, device=device)
 print(f'test accuracy: {acc_test*100:.2f}%')
 
-acc_train = models.test_accuracy(model, dataloader_train)
+acc_train = models.test_accuracy(model, dataloader_train, device=device)
 print(f'train accuracy: {acc_train*100:.2f}%')
 #損失関数(誤差関数、ロス関数)の選択
 loss_fn = torch.nn.CrossEntropyLoss()
@@ -74,25 +77,25 @@ acc_test_history = []
 for k in range(n_epochs):
     print(f'epach {k+1}/{n_epochs}', end=': ', flush=True)
     time_start = time.time()    
-    loss_train = models.train(model, dataloader_train, loss_fn, optimizer)
+    loss_train = models.train(model, dataloader_train, loss_fn, optimizer, device=device)
     print(f'train loss: {loss_train:.3f}', end=', ', flush=True)
     loss_train_history.append(loss_train)
     time_end = time.time()
     print(f'実行時間: {time_end-time_start:.2f}秒', end=', ', flush=True)
     time_start = time.time()
-    loss_test = models.test(model, dataloader_test, loss_fn)
+    loss_test = models.test(model, dataloader_test, loss_fn, device=device)
     print(f'test loss: {loss_test:.3f}', end=', ', flush=True)
     loss_test_history.append(loss_test)
     time_end = time.time()
     print(f'実行時間: {time_end-time_start:.2f}秒', end=', ', flush=True)
     time_start = time.time()
-    acc_train = models.test_accuracy(model, dataloader_train)
+    acc_train = models.test_accuracy(model, dataloader_train, device=device)
     print(f'train accuracy: {acc_train*100:.2f}%', end=', ', flush=True)
     acc_train_history.append(acc_train)
     time_end = time.time()
     print(f'実行時間: {time_end-time_start:.2f}秒', end=', ', flush=True)
     time_start = time.time()
-    acc_test = models.test_accuracy(model, dataloader_test)
+    acc_test = models.test_accuracy(model, dataloader_test, device=device)
     print(f'test accuracy: {acc_test*100:.2f}%', end=', ', flush=True)
     acc_test_history.append(acc_test)
     time_end = time.time()
